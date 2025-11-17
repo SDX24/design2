@@ -23,7 +23,7 @@ export default function SignInPage() {
     <div className="relative flex min-h-screen items-center justify-center px-5">
       {/* Vibrant gradient background */}
       <div className="fixed inset-0 -z-10">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#fcfcfc] via-[#f8f8f8] to-[#f5f5f5]" />
+        <div className="absolute inset-0 bg-gradient-to-br from-[var(--color-neutral-50)] via-[var(--color-neutral-100)] to-[var(--color-neutral-200)]" />
         <div className="absolute top-0 left-0 right-0 h-[400px] bg-gradient-to-b from-[var(--color-primary)]/15 via-[var(--color-accent)]/8 to-transparent" />
         <div className="absolute top-20 right-0 h-[300px] w-[300px] rounded-full bg-[var(--color-accent)]/15 blur-3xl animate-pulse" style={{ animationDuration: '4s' }} />
         <div className="absolute bottom-20 left-0 h-[350px] w-[350px] rounded-full bg-[var(--color-primary)]/15 blur-3xl animate-pulse" style={{ animationDuration: '6s', animationDelay: '1s' }} />
