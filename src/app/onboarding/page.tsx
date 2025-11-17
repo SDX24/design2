@@ -8,56 +8,126 @@ export default function OnboardingPage() {
   const router = useRouter();
   const [country, setCountry] = useState("Canada");
   const [age, setAge] = useState<number | "">("");
+  const [step, setStep] = useState(1);
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    // you could store to localStorage here later
-    router.push("/");
+    // Smooth transition animation
+    setStep(3);
+    setTimeout(() => {
+      router.push("/");
+    }, 800);
   }
 
   return (
     <AppShell title="Starter Guide">
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <p className="text-sm text-slate-600">
-          Tell us a bit about you so we can tailor your roadmap.
-        </p>
-
-        <div className="space-y-2">
-          <label className="text-sm font-medium">Country / Region</label>
-          <select
-            value={country}
-            onChange={(e) => setCountry(e.target.value)}
-            className="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm focus:border-[var(--color-primary)] focus:outline-none"
-          >
-            <option>Canada</option>
-            <option>United States</option>
-            <option>Other</option>
-          </select>
-        </div>
-
-        <div className="space-y-2">
-          <label className="text-sm font-medium">Age</label>
-          <input
-            type="number"
-            min={15}
-            max={99}
-            value={age}
-            onChange={(e) => setAge(e.target.value ? Number(e.target.value) : "")}
-            className="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm focus:border-[var(--color-primary)] focus:outline-none"
-            placeholder="18"
-          />
-          <p className="text-xs text-slate-500">
-            Roadmap focuses on key ages like 16, 18, 19+.
+      <div className="space-y-6 py-4">
+        {/* Hero Section */}
+        <div className="space-y-3 text-center">
+          <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-accent)] text-4xl shadow-lg">
+            🎯
+          </div>
+          <h2 className="text-2xl font-bold text-[var(--color-text)]">
+            Let's personalize your roadmap
+          </h2>
+          <p className="text-base text-[var(--color-text-muted)]">
+            Tell us about you so we can show the most relevant guides for your situation
           </p>
         </div>
 
-        <button
-          type="submit"
-          className="mt-2 w-full rounded-xl bg-[var(--color-primary)] px-3 py-2 text-sm font-medium text-white hover:bg-blue-600"
-        >
-          Continue to roadmap
-        </button>
-      </form>
+        {/* Progress Indicator */}
+        <div className="flex items-center justify-center gap-2">
+          {[1, 2].map((s) => (
+            <div
+              key={s}
+              className={`h-2 w-16 rounded-full transition-all duration-300 ${
+                s <= step
+                  ? "bg-[var(--color-primary)]"
+                  : "bg-[var(--color-border)]"
+              }`}
+            />
+          ))}
+        </div>
+
+        {step === 1 && (
+          <form onSubmit={(e) => { e.preventDefault(); setStep(2); }} className="space-y-6 animate-fadeIn">
+            <div className="space-y-3">
+              <label className="text-base font-semibold text-[var(--color-text)]">
+                🌍 Where are you located?
+              </label>
+              <select
+                value={country}
+                onChange={(e) => setCountry(e.target.value)}
+                className="w-full rounded-[var(--radius-md)] border-2 border-[var(--color-border)] bg-white px-4 py-4 text-base shadow-sm transition-all focus:border-[var(--color-primary)] focus:shadow-md focus:outline-none"
+              >
+                <option>🇨🇦 Canada</option>
+                <option>🇺🇸 United States</option>
+                <option>🇬🇧 United Kingdom</option>
+                <option>🌎 Other</option>
+              </select>
+              <p className="caption">
+                We'll show guides specific to your region's rules and processes
+              </p>
+            </div>
+
+            <button
+              type="submit"
+              className="w-full rounded-[var(--radius-md)] bg-gradient-to-r from-[var(--color-primary)] to-blue-500 px-6 py-4 text-base font-semibold text-white shadow-lg transition-all hover:shadow-xl hover:scale-[1.02] active:scale-[0.98]"
+            >
+              Continue →
+            </button>
+          </form>
+        )}
+
+        {step === 2 && (
+          <form onSubmit={handleSubmit} className="space-y-6 animate-fadeIn">
+            <div className="space-y-3">
+              <label className="text-base font-semibold text-[var(--color-text)]">
+                🎂 How old are you?
+              </label>
+              <input
+                type="number"
+                min={15}
+                max={99}
+                value={age}
+                onChange={(e) => setAge(e.target.value ? Number(e.target.value) : "")}
+                className="w-full rounded-[var(--radius-md)] border-2 border-[var(--color-border)] bg-white px-4 py-4 text-base shadow-sm transition-all focus:border-[var(--color-primary)] focus:shadow-md focus:outline-none"
+                placeholder="Enter your age (e.g., 18)"
+                autoFocus
+                required
+              />
+              <p className="caption">
+                Your roadmap will focus on key milestones at 16, 18, and 19+
+              </p>
+            </div>
+
+            <div className="space-y-3">
+              <button
+                type="submit"
+                className="w-full rounded-[var(--radius-md)] bg-gradient-to-r from-[var(--color-primary)] to-blue-500 px-6 py-4 text-base font-semibold text-white shadow-lg transition-all hover:shadow-xl hover:scale-[1.02] active:scale-[0.98]"
+              >
+                See my roadmap 🚀
+              </button>
+              <button
+                type="button"
+                onClick={() => setStep(1)}
+                className="w-full rounded-[var(--radius-md)] border-2 border-[var(--color-border)] bg-white px-6 py-3 text-base font-medium text-[var(--color-text)] transition-all hover:border-[var(--color-primary)] hover:shadow-sm"
+              >
+                ← Back
+              </button>
+            </div>
+          </form>
+        )}
+
+        {step === 3 && (
+          <div className="space-y-4 text-center animate-fadeIn">
+            <div className="mx-auto h-16 w-16 animate-spin rounded-full border-4 border-[var(--color-border)] border-t-[var(--color-primary)]"></div>
+            <p className="text-base font-medium text-[var(--color-text)]">
+              Personalizing your experience...
+            </p>
+          </div>
+        )}
+      </div>
     </AppShell>
   );
 }
