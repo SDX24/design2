@@ -5,10 +5,12 @@ function GuideLink({ href, title }: { href: string; title: string }) {
   return (
     <Link
       href={href}
-      className="flex items-center justify-between rounded-xl border border-slate-200 px-3 py-2 text-sm"
+      className="group flex items-center justify-between rounded-xl border border-[var(--color-border)] bg-white px-4 py-3 text-base shadow-sm transition-all hover:border-[var(--color-primary)] hover:shadow-md"
     >
-      <span>{title}</span>
-      <span className="text-xs text-slate-500">Open →</span>
+      <span className="font-medium text-[var(--color-text)]">{title}</span>
+      <span className="text-sm text-[var(--color-text-muted)] transition-transform group-hover:translate-x-1">
+        →
+      </span>
     </Link>
   );
 }
@@ -16,50 +18,66 @@ function GuideLink({ href, title }: { href: string; title: string }) {
 export default function HomePage() {
   return (
     <AppShell title="Adult" showHeader={false}>
-      <section className="space-y-4">
-        <div className="mt-4">
-          <p className="text-sm text-slate-600">Welcome back</p>
-          <h2 className="mt-1 text-2xl font-semibold text-[var(--color-primary)]">
+      <div className="space-y-6 pb-8">
+        {/* Welcome Header */}
+        <header className="space-y-2 pt-6">
+          <p className="text-sm text-[var(--color-text-muted)]">Welcome back</p>
+          <h1 className="text-[32px] font-semibold leading-tight text-[var(--color-primary)]">
             What do you want to learn today?
-          </h2>
-        </div>
+          </h1>
+        </header>
 
-        {/* Starter Guide – make this hero-level obvious */}
+        {/* Starter Guide – HERO PROMINENCE per Assignment 08 feedback */}
         <Link
           href="/onboarding"
-          className="block rounded-2xl border border-[var(--color-primary)] bg-[var(--color-primary)]/5 px-4 py-4"
+          className="group block rounded-[var(--radius-lg)] border-2 border-[var(--color-primary)] bg-gradient-to-br from-[var(--color-primary)]/8 to-[var(--color-primary)]/4 px-6 py-6 shadow-md transition-all hover:shadow-lg"
         >
-          <p className="text-[11px] font-heading text-[var(--color-accent)] uppercase tracking-wide">
-            Starter Guide
-          </p>
-          <h3 className="mt-1 text-lg font-semibold">
-            See your age-based roadmap
-          </h3>
-          <p className="mt-1 text-sm text-slate-700">
-            At 16, 18, 19+—see what documents, money tasks, and decisions to
-            prepare for.
-          </p>
+          <div className="flex items-start justify-between">
+            <div className="flex-1">
+              <p className="label-uppercase text-[var(--color-accent)]">
+                ⭐ Starter Guide
+              </p>
+              <h2 className="mt-2 text-xl font-semibold text-[var(--color-text)]">
+                See your age-based roadmap
+              </h2>
+              <p className="mt-2 text-base leading-relaxed text-[var(--color-text)]">
+                At 16, 18, 19+—see what documents, money tasks, and decisions to prepare for.
+              </p>
+            </div>
+            <div className="ml-3 flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-[var(--color-primary)]/10 text-xl transition-transform group-hover:scale-110">
+              📍
+            </div>
+          </div>
         </Link>
 
-        {/* Local Guides */}
+        {/* Local Guides – Clear label per Assignment 08 */}
         <Link
           href="/local-guides"
-          className="block rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3"
+          className="group block rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-bg-light)] px-6 py-5 shadow-sm transition-all hover:border-[var(--color-primary)] hover:shadow-md"
         >
-          <p className="text-[11px] font-heading text-slate-500 uppercase tracking-wide">
-            Local Guides
-          </p>
-          <h3 className="mt-1 text-base font-medium">
-            See guides for your region
-          </h3>
-          <p className="mt-1 text-xs text-slate-600">
-            Taxes, ID, renting and more tailored to where you live.
-          </p>
+          <div className="flex items-start justify-between">
+            <div className="flex-1">
+              <p className="label-uppercase text-[var(--color-text-muted)]">
+                📍 Local Guides
+              </p>
+              <h3 className="mt-2 text-lg font-semibold text-[var(--color-text)]">
+                See guides for your region
+              </h3>
+              <p className="mt-1 text-sm text-[var(--color-text-muted)]">
+                Taxes, ID, renting and more tailored to where you live.
+              </p>
+            </div>
+            <span className="ml-3 text-xl transition-transform group-hover:translate-x-1">
+              →
+            </span>
+          </div>
         </Link>
 
-        {/* Popular guides */}
-        <section className="mt-2 space-y-2">
-          <h3 className="text-sm font-semibold">Popular guides</h3>
+        {/* Popular Guides */}
+        <section className="space-y-3">
+          <h3 className="text-lg font-semibold text-[var(--color-text)]">
+            Popular guides
+          </h3>
           <div className="space-y-2">
             <GuideLink href="/guides/budgeting-101" title="Budgeting 101" />
             <GuideLink
@@ -73,32 +91,40 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Search entry point */}
-        <section className="mt-4">
-          <Link
-            href="/search"
-            className="flex items-center justify-between rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm hover:border-[var(--color-primary)]"
-          >
+        {/* Search Entry Point */}
+        <Link
+          href="/search"
+          className="group flex items-center justify-between rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-white px-5 py-4 shadow-sm transition-all hover:border-[var(--color-primary)] hover:shadow-md"
+        >
+          <div className="flex items-center gap-3">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--color-primary)]/10 text-lg">
+              🔍
+            </div>
             <div>
-              <p className="text-xs font-heading text-slate-500 uppercase tracking-wide">
+              <p className="label-uppercase text-[var(--color-text-muted)]">
                 Search
               </p>
-              <p className="mt-1 text-sm">Search all guides and community posts</p>
+              <p className="mt-1 text-base font-medium text-[var(--color-text)]">
+                Search all guides and community posts
+              </p>
             </div>
-            <span className="text-xs text-slate-500">Open →</span>
-          </Link>
-        </section>
+          </div>
+          <span className="text-xl text-[var(--color-text-muted)] transition-transform group-hover:translate-x-1">
+            →
+          </span>
+        </Link>
 
-        {/* History link */}
-        <section className="mt-2">
+        {/* History Link */}
+        <div className="pt-2 text-center">
           <Link
             href="/history"
-            className="text-xs text-[var(--color-primary)] underline"
+            className="inline-flex items-center gap-1 text-sm font-medium text-[var(--color-primary)] underline decoration-2 underline-offset-4 transition-colors hover:text-[var(--color-accent)]"
           >
+            <span>📚</span>
             View your recent guides & posts
           </Link>
-        </section>
-      </section>
+        </div>
+      </div>
     </AppShell>
   );
 }

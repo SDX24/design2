@@ -39,49 +39,81 @@ export default function SearchPage() {
 
   return (
     <AppShell title="Search">
-      <section className="space-y-4">
-        <div className="space-y-2">
-          <label className="text-sm font-medium" htmlFor="search">
+      <div className="space-y-6">
+        <div className="space-y-3">
+          <label className="text-lg font-semibold text-[var(--color-text)]" htmlFor="search">
             Search guides and community
           </label>
-          <input
-            id="search"
-            type="text"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="Try 'budget', 'renting', or 'taxes'"
-            className="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm focus:border-[var(--color-primary)] focus:outline-none"
-          />
-          <p className="text-xs text-slate-500">
-            Results update as you type. This is a prototype; results are from sample data.
+          <div className="relative">
+            <div className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-xl">
+              🔍
+            </div>
+            <input
+              id="search"
+              type="text"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Try 'budget', 'renting', or 'taxes'"
+              autoFocus
+              className="w-full rounded-[var(--radius-md)] border-2 border-[var(--color-border)] bg-white px-12 py-4 text-base shadow-sm transition-all placeholder:text-[var(--color-text-muted)] focus:border-[var(--color-primary)] focus:shadow-md focus:outline-none"
+            />
+            {query && (
+              <button
+                onClick={() => setQuery("")}
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-lg text-[var(--color-text-muted)] transition-colors hover:text-[var(--color-text)]"
+                aria-label="Clear search"
+              >
+                ✕
+              </button>
+            )}
+          </div>
+          <p className="caption">
+            Results update as you type. This is a prototype with sample data.
           </p>
         </div>
 
         {!trimmedQuery && (
-          <p className="text-xs text-slate-500">
-            Start typing to search for guides or community posts.
-          </p>
+          <div className="rounded-[var(--radius-md)] bg-[var(--color-bg-light)] px-6 py-8 text-center">
+            <div className="mb-3 text-4xl">🔎</div>
+            <p className="text-base text-[var(--color-text-muted)]">
+              Start typing to search for guides or community posts
+            </p>
+          </div>
         )}
 
         {trimmedQuery && !hasResults && (
-          <p className="text-xs text-slate-500">
-            No results for "{query}". Try another term like "budget" or "rent".
-          </p>
+          <div className="rounded-[var(--radius-md)] bg-[var(--color-bg-light)] px-6 py-8 text-center">
+            <div className="mb-3 text-4xl">😔</div>
+            <p className="text-base text-[var(--color-text)]">
+              No results for <strong>"{query}"</strong>
+            </p>
+            <p className="mt-2 caption">
+              Try another term like "budget", "rent", or "taxes"
+            </p>
+          </div>
         )}
 
         {guideResults.length > 0 && (
-          <section className="space-y-2">
-            <h2 className="text-sm font-semibold">Guides</h2>
+          <section className="space-y-3">
+            <h2 className="text-lg font-semibold text-[var(--color-text)]">
+              Guides ({guideResults.length})
+            </h2>
             <div className="space-y-2">
               {guideResults.map((guide) => (
                 <Link
                   key={guide.slug}
                   href={`/guides/${guide.slug}`}
-                  className="block rounded-xl border border-slate-200 px-3 py-2 text-sm hover:border-[var(--color-primary)]"
+                  className="group block rounded-[var(--radius-md)] border border-[var(--color-border)] bg-white px-4 py-3 shadow-sm transition-all hover:border-[var(--color-primary)] hover:shadow-md"
                 >
-                  <p className="text-[11px] text-slate-500">Guide · {guide.category}</p>
-                  <p className="mt-1 text-sm font-medium">{guide.title}</p>
-                  <p className="mt-1 text-xs text-slate-600">{guide.summary}</p>
+                  <p className="label-uppercase text-[var(--color-text-muted)]">
+                    📚 Guide · {guide.category}
+                  </p>
+                  <p className="mt-1 text-base font-semibold text-[var(--color-text)]">
+                    {guide.title}
+                  </p>
+                  <p className="mt-1 text-sm text-[var(--color-text-muted)]">
+                    {guide.summary}
+                  </p>
                 </Link>
               ))}
             </div>
@@ -89,26 +121,32 @@ export default function SearchPage() {
         )}
 
         {postResults.length > 0 && (
-          <section className="space-y-2">
-            <h2 className="text-sm font-semibold">Community posts</h2>
+          <section className="space-y-3">
+            <h2 className="text-lg font-semibold text-[var(--color-text)]">
+              Community posts ({postResults.length})
+            </h2>
             <div className="space-y-2">
               {postResults.map((post) => (
                 <Link
                   key={post.id}
                   href={`/community/${post.id}`}
-                  className="block rounded-xl border border-slate-200 px-3 py-2 text-sm hover:border-[var(--color-primary)]"
+                  className="group block rounded-[var(--radius-md)] border border-[var(--color-border)] bg-white px-4 py-3 shadow-sm transition-all hover:border-[var(--color-primary)] hover:shadow-md"
                 >
-                  <p className="text-[11px] text-[var(--color-accent)]">
+                  <p className="label-uppercase text-[var(--color-accent)]">
                     {post.tag}
                   </p>
-                  <p className="mt-1 text-sm font-medium">{post.title}</p>
-                  <p className="mt-1 text-xs text-slate-600">{post.excerpt}</p>
+                  <p className="mt-1 text-base font-semibold text-[var(--color-text)]">
+                    {post.title}
+                  </p>
+                  <p className="mt-1 text-sm text-[var(--color-text-muted)]">
+                    {post.excerpt}
+                  </p>
                 </Link>
               ))}
             </div>
           </section>
         )}
-      </section>
+      </div>
     </AppShell>
   );
 }
