@@ -3,6 +3,7 @@
 import { notFound, useRouter } from "next/navigation";
 import { AppShell } from "@/components/AppShell";
 import { guides } from "@/data/guides";
+import { Card, AccentButton } from "@/components/ui";
 import { useState } from "react";
 
 interface GuidePageProps {
@@ -100,38 +101,40 @@ export default function GuidePage({ params }: GuidePageProps) {
             {guide.steps.map((step, index) => {
               const isCompleted = completedSteps.has(step.id);
               return (
-                <li
-                  key={step.id}
-                  className={`group rounded-[var(--radius-lg)] border-2 p-4 shadow-sm transition-all ${
-                    isCompleted
-                      ? "border-[var(--color-primary)] bg-[var(--color-primary)]/5"
-                      : "border-[var(--color-border)] bg-white hover:border-[var(--color-primary)]/50 hover:shadow-md"
-                  }`}
-                >
-                  <div className="flex gap-4">
-                    <button
-                      onClick={() => toggleStep(step.id)}
-                      className={`flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full text-base font-bold transition-all ${
-                        isCompleted
-                          ? "bg-[var(--color-primary)] text-white shadow-md"
-                          : "bg-[var(--color-primary)]/10 text-[var(--color-primary)] group-hover:bg-[var(--color-primary)]/20"
-                      }`}
-                    >
-                      {isCompleted ? "✓" : index + 1}
-                    </button>
-                    <div className="flex-1">
-                      <h3 className={`text-base font-semibold ${
-                        isCompleted
-                          ? "text-[var(--color-primary)] line-through"
-                          : "text-[var(--color-text)]"
-                      }`}>
-                        {step.title}
-                      </h3>
-                      <p className="mt-1 text-sm text-[var(--color-text-muted)]">
-                        {step.description}
-                      </p>
+                <li key={step.id}>
+                  <Card
+                    variant={isCompleted ? "default" : "interactive"}
+                    className={`border-2 ${
+                      isCompleted
+                        ? "border-[var(--color-primary)] bg-[var(--color-primary)]/5"
+                        : "hover:border-[var(--color-primary)]/50"
+                    }`}
+                  >
+                    <div className="flex gap-4">
+                      <button
+                        onClick={() => toggleStep(step.id)}
+                        className={`flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full text-base font-bold transition-all ${
+                          isCompleted
+                            ? "bg-[var(--color-primary)] text-white shadow-md"
+                            : "bg-[var(--color-primary)]/10 text-[var(--color-primary)] hover:bg-[var(--color-primary)]/20"
+                        }`}
+                      >
+                        {isCompleted ? "✓" : index + 1}
+                      </button>
+                      <div className="flex-1">
+                        <h3 className={`text-base font-semibold ${
+                          isCompleted
+                            ? "text-[var(--color-primary)] line-through"
+                            : "text-[var(--color-text)]"
+                        }`}>
+                          {step.title}
+                        </h3>
+                        <p className="mt-1 text-sm text-[var(--color-text-muted)]">
+                          {step.description}
+                        </p>
+                      </div>
                     </div>
-                  </div>
+                  </Card>
                 </li>
               );
             })}
@@ -140,19 +143,20 @@ export default function GuidePage({ params }: GuidePageProps) {
 
         {/* Completion CTA */}
         {completedSteps.size === guide.steps.length && (
-          <div className="animate-slideUp rounded-[var(--radius-lg)] bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-accent)] p-6 text-center text-white shadow-lg">
+          <Card className="animate-slideUp bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-accent)] text-center text-white shadow-lg border-none">
             <div className="text-4xl mb-3">🎉</div>
             <h3 className="text-xl font-bold">Congratulations!</h3>
             <p className="mt-2 text-sm opacity-90">
               You've completed this guide. Keep learning!
             </p>
-            <button
+            <AccentButton
+              variant="outline"
               onClick={() => router.push("/guides")}
-              className="mt-4 rounded-full bg-white px-6 py-3 text-base font-semibold text-[var(--color-primary)] transition-all hover:shadow-lg hover:scale-105"
+              className="mt-4 bg-white text-[var(--color-primary)] hover:bg-white/90"
             >
               Explore more guides
-            </button>
-          </div>
+            </AccentButton>
+          </Card>
         )}
       </article>
     </AppShell>

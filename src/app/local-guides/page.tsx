@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { AppShell } from "@/components/AppShell";
 import { guides } from "@/data/guides";
+import { SectionHeader, GuideCard, SubtleTag, Card } from "@/components/ui";
 import { useState } from "react";
 
 const regions = ["All regions", "Ontario", "British Columbia", "Quebec", "Alberta"];
@@ -34,12 +35,11 @@ export default function LocalGuidesPage() {
               📍
             </div>
             <div>
-              <h1 className="text-2xl font-bold text-[var(--color-text)]">
-                Local Guides
-              </h1>
-              <p className="text-sm text-[var(--color-text-muted)]">
-                Guides tailored to your region
-              </p>
+              <SectionHeader 
+                title="Local Guides" 
+                subtitle="Guides tailored to your region"
+                className="mb-0"
+              />
             </div>
           </div>
           <p className="text-base leading-relaxed text-[var(--color-text-muted)]">
@@ -49,7 +49,10 @@ export default function LocalGuidesPage() {
 
         {/* Region Filter */}
         <div>
-          <h3 className="mb-3 text-sm font-semibold text-[var(--color-text)]">
+          <h3 
+            className="mb-3 text-sm font-semibold"
+            style={{ color: '#222831' }}
+          >
             Filter by region
           </h3>
           <div className="flex gap-2 overflow-x-auto pb-2">
@@ -57,13 +60,14 @@ export default function LocalGuidesPage() {
               <button
                 key={region}
                 onClick={() => setSelectedRegion(region)}
-                className={`flex-shrink-0 rounded-full px-4 py-2 text-sm font-medium transition-all ${
-                  selectedRegion === region
-                    ? "bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-accent)] text-white shadow-md"
-                    : "bg-[var(--color-bg)] text-[var(--color-text-muted)] hover:bg-[var(--color-primary)]/10"
-                }`}
               >
-                {region}
+                <SubtleTag 
+                  variant={selectedRegion === region ? "primary" : "neutral"}
+                  className={selectedRegion === region ? "bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-accent)] shadow-md" : ""}
+                  style={selectedRegion === region ? { color: '#000000' } : undefined}
+                >
+                  {region}
+                </SubtleTag>
               </button>
             ))}
           </div>
@@ -71,7 +75,7 @@ export default function LocalGuidesPage() {
 
         {/* Empty State */}
         {filteredGuides.length === 0 && (
-          <div className="rounded-[var(--radius-lg)] border-2 border-dashed border-[var(--color-border)] bg-[var(--color-bg)] px-6 py-12 text-center">
+          <Card className="border-2 border-dashed text-center py-8">
             <div className="text-5xl mb-4">🗺️</div>
             <h3 className="text-lg font-bold text-[var(--color-text)]">
               No guides yet
@@ -89,7 +93,7 @@ export default function LocalGuidesPage() {
                 View all regions
               </button>
             )}
-          </div>
+          </Card>
         )}
 
         {/* Guides List */}
@@ -99,43 +103,17 @@ export default function LocalGuidesPage() {
               {filteredGuides.length} {filteredGuides.length === 1 ? "guide" : "guides"} found
             </p>
             <div className="space-y-3">
-              {filteredGuides.map((guide, index) => (
-                <Link
+              {filteredGuides.map((guide) => (
+                <GuideCard
                   key={guide.slug}
+                  title={guide.title}
+                  summary={guide.summary}
+                  category={guide.category}
+                  emoji={categoryEmojis[guide.category] || "📄"}
                   href={`/guides/${guide.slug}`}
-                  className="group block rounded-[var(--radius-lg)] border-2 border-[var(--color-border)] bg-white p-4 shadow-sm transition-all hover:border-[var(--color-primary)] hover:shadow-md"
-                  style={{
-                    animation: "slideUp 0.5s ease-out",
-                    animationDelay: `${index * 0.1}s`,
-                    animationFillMode: "backwards",
-                  }}
-                >
-                  <div className="flex gap-4">
-                    <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[var(--color-primary)]/10 to-[var(--color-accent)]/10 text-2xl transition-all group-hover:scale-110">
-                      {categoryEmojis[guide.category] || "📄"}
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex items-start justify-between gap-2">
-                        <h2 className="text-base font-bold text-[var(--color-text)]">
-                          {guide.title}
-                        </h2>
-                        {guide.region && (
-                          <span className="flex-shrink-0 rounded-full bg-[var(--color-primary)]/10 px-3 py-1 text-xs font-semibold text-[var(--color-primary)]">
-                            📍 {guide.region}
-                          </span>
-                        )}
-                      </div>
-                      <p className="mt-1 text-sm text-[var(--color-text-muted)]">
-                        {guide.summary}
-                      </p>
-                      <div className="mt-2 flex items-center gap-3 text-xs text-[var(--color-text-muted)]">
-                        <span>{guide.steps.length} steps</span>
-                        <span className="h-1 w-1 rounded-full bg-[var(--color-text-muted)]" />
-                        <span className="capitalize">{guide.category}</span>
-                      </div>
-                    </div>
-                  </div>
-                </Link>
+                  stepCount={guide.steps.length}
+                  region={guide.region}
+                />
               ))}
             </div>
           </div>

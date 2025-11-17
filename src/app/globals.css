@@ -2,70 +2,73 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Import Google Fonts - STRICT BRANDING */
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap');
+
 :root {
-  /* ========== BRAND COLORS - COMPLETE SCALE ========== */
+  /* ========== STRICT BRAND COLORS ========== */
   
-  /* Primary Blue (Trust + Guidance) - Full 50-900 Scale */
+  /* Primary Blue - #3A7BD5 */
   --color-primary-50: #EAF3FD;
   --color-primary-100: #D4E7FB;
   --color-primary-200: #A9CFFA;
   --color-primary-300: #7EB7F7;
   --color-primary-400: #549FF3;
-  --color-primary-500: #3A7BD5;  /* Main brand color */
+  --color-primary-500: #3A7BD5;  /* STRICT PRIMARY */
   --color-primary-600: #2F6BB8;
   --color-primary-700: #24528A;
   --color-primary-800: #19385C;
   --color-primary-900: #0F1F2E;
   
-  /* Accent Coral (Warmth + Motivation) - Full 50-900 Scale */
+  /* Accent Coral - #FF6B6B */
   --color-accent-50: #FFECEC;
   --color-accent-100: #FFD4D4;
   --color-accent-200: #FFB0B0;
   --color-accent-300: #FF8C8C;
   --color-accent-400: #FF7676;
-  --color-accent-500: #FF6B6B;  /* Main accent color */
+  --color-accent-500: #FF6B6B;  /* STRICT ACCENT */
   --color-accent-600: #E65F5F;
   --color-accent-700: #B64A4A;
   --color-accent-800: #873636;
   --color-accent-900: #5A2424;
   
-  /* Neutral Scale (Backgrounds + Borders) - Full 50-900 Scale */
-  --color-neutral-50: #FCFCFC;
+  /* Soft Accent - #FFBBBB */
+  --color-soft-accent: #FFBBBB;
+  
+  /* Neutrals - Strictly defined */
+  --color-neutral-50: #FCFCFC;  /* Card Background */
   --color-neutral-100: #F8F8F8;
-  --color-neutral-200: #F5F5F5;
-  --color-neutral-300: #E5E5E5;
+  --color-neutral-200: #F5F5F5;  /* Background Light */
+  --color-neutral-300: #E3E3E3;  /* Border Gray */
   --color-neutral-400: #D4D4D4;
   --color-neutral-500: #A3A3A3;
   --color-neutral-600: #737373;
-  --color-neutral-700: #525252;
+  --color-neutral-700: #393E46;  /* Text Secondary */
   --color-neutral-800: #404040;
-  --color-neutral-900: #262626;
+  --color-neutral-900: #222831;  /* Text Primary */
   
-  /* Semantic Named Colors (Backwards Compatibility + Easier Access) */
-  --color-primary: var(--color-primary-500);
+  /* Semantic Names - STRICT BRANDING */
+  --color-primary: #3A7BD5;
+  --color-accent: #FF6B6B;
+  --color-text: #222831;
+  --color-text-secondary: #393E46;
+  --color-bg: #F5F5F5;
+  --color-bg-card: #FCFCFC;
+  --color-border: #E3E3E3;
+  
+  /* Backwards Compatibility */
   --color-primary-light: var(--color-primary-400);
   --color-primary-dark: var(--color-primary-600);
-  --color-accent: var(--color-accent-500);
   --color-accent-light: var(--color-accent-400);
   --color-accent-dark: var(--color-accent-600);
-  
-  /* Background Colors */
-  --color-bg: var(--color-neutral-50);
   --color-bg-subtle: var(--color-neutral-100);
   --color-bg-elevated: #FFFFFF;
-  
-  /* Text Colors (WCAG AA Compliant) */
-  --color-text: #222831;
-  --color-text-secondary: #6B7280;
-  --color-text-tertiary: #9CA3AF;
   --color-text-muted: var(--color-text-secondary);
+  --color-text-tertiary: #9CA3AF;
   --color-text-subtle: var(--color-text-tertiary);
   --color-text-white: #FFFFFF;
-  --color-text-blue: var(--color-primary-500);
-  --color-text-coral: var(--color-accent-500);
-  
-  /* Border Colors */
-  --color-border: #E5E7EB;
+  --color-text-blue: var(--color-primary);
+  --color-text-coral: var(--color-accent);
   --color-border-light: #F3F4F6;
   --color-border-medium: #D1D5DB;
   --color-border-dark: #9CA3AF;
@@ -89,20 +92,21 @@
   --gradient-blue-tint: linear-gradient(135deg, rgba(58, 123, 213, 0.08) 0%, rgba(58, 123, 213, 0.03) 100%);
   --gradient-coral-tint: linear-gradient(135deg, rgba(255, 107, 107, 0.08) 0%, rgba(255, 107, 107, 0.03) 100%);
 
-  /* ========== TYPOGRAPHY ========== */
-  --font-heading: var(--font-heading);
-  --font-body: var(--font-body);
+  /* ========== TYPOGRAPHY - STRICT BRANDING ========== */
+  --font-heading: 'JetBrains Mono', monospace;
+  --font-body: 'IBM Plex Sans', sans-serif;
   
-  /* Fluid Typography Scale (8px base) */
+  /* Typography Scale - STRICT */
   --text-xs: 12px;
   --text-sm: 14px;
   --text-base: 16px;
   --text-lg: 18px;
   --text-xl: 20px;
   --text-2xl: 24px;
-  --text-3xl: 28px;
+  --text-3xl: 28px;  /* H3 */
   --text-4xl: 32px;
-  --text-5xl: 40px;
+  --text-5xl: 40px;  /* H2 */
+  --text-6xl: 64px;  /* H1 */
 
   /* ========== SPACING (8px system) ========== */
   --space-0: 0;
@@ -155,44 +159,55 @@ html {
 }
 
 body {
-  font-family: var(--font-body);
-  font-size: var(--text-base);
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 16px;
   line-height: 1.6;
-  color: var(--color-text);
-  background: var(--color-bg);
+  color: #222831;
+  background: #F5F5F5;
   margin: 0;
   padding: 0;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-heading);
+  font-family: 'JetBrains Mono', monospace;
   font-weight: 600;
   line-height: 1.2;
   margin: 0;
 }
 
-/* Typography Scale - Brand Spec */
+/* Typography Scale - STRICT BRANDING */
 h1 { 
-  font-size: var(--text-4xl);  /* 32px default, 36-40px on larger screens */
+  font-size: 64px;  /* STRICT H1 */
   font-weight: 700;
   letter-spacing: -0.02em;
   line-height: 1.1;
 }
 h2 { 
-  font-size: var(--text-2xl);  /* 24px, matches 24-28px spec */
+  font-size: 40px;  /* STRICT H2 */
   font-weight: 600;
   letter-spacing: -0.01em;
   line-height: 1.2;
 }
 h3 { 
-  font-size: var(--text-xl);  /* 20px, matches 20-22px spec */
+  font-size: 28px;  /* STRICT H3 */
   font-weight: 600;
   line-height: 1.3;
 }
 h4 { 
-  font-size: var(--text-lg);  /* 18px */
+  font-size: 18px;  /* Body Large */
   font-weight: 600;
   line-height: 1.4;
+}
+
+/* Body text - IBM Plex Sans 16-18px */
+p, span, div {
+  font-family: 'IBM Plex Sans', sans-serif;
+}
+
+/* Navigation - IBM Plex Sans 12-14px */
+nav, nav a, nav button {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 14px;
 }
 
 /* ========== UTILITY CLASSES ========== */

@@ -2,10 +2,11 @@ import type { Metadata } from "next";
 import React from "react";
 import "./globals.css";
 import { JetBrains_Mono, IBM_Plex_Sans } from "next/font/google";
+import { SplashScreen } from "@/components/SplashScreen";
 
 const headingFont = JetBrains_Mono({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["100", "400", "500", "600", "700"],
   variable: "--font-heading",
 });
 
@@ -30,6 +31,7 @@ export default function RootLayout({
       <body
         className={`${headingFont.variable} ${bodyFont.variable} bg-[var(--color-bg)] text-[var(--color-text)]`}
       >
+        <SplashScreen />
         {children}
       </body>
     </html>

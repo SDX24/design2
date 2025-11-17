@@ -17,7 +17,13 @@ export function BottomNav() {
 
   return (
     <nav 
-      className="fixed bottom-0 left-0 right-0 z-20 border-t border-[var(--color-border)] bg-white/95 shadow-lg backdrop-blur-sm"
+      className="fixed bottom-0 left-0 right-0 z-20 border-t shadow-lg backdrop-blur-sm"
+      style={{ 
+        borderColor: '#E3E3E3',
+        backgroundColor: '#FCFCFC',
+        fontFamily: 'IBM Plex Sans, sans-serif',
+        fontSize: '14px'
+      }}
       aria-label="Main navigation"
     >
       <div className="mx-auto flex max-w-md items-center justify-between px-2 py-2">
@@ -30,10 +36,20 @@ export function BottomNav() {
               aria-current={active ? "page" : undefined}
               className={cn(
                 "flex min-h-[44px] flex-1 flex-col items-center justify-center gap-1 rounded-lg px-2 py-1 transition-all",
-                active
-                  ? "text-[var(--color-primary)]"
-                  : "text-[var(--color-text-muted)] hover:bg-[var(--color-primary)]/5"
               )}
+              style={{
+                color: active ? '#3A7BD5' : '#393E46'
+              }}
+              onMouseEnter={(e) => {
+                if (!active) {
+                  e.currentTarget.style.backgroundColor = 'rgba(58, 123, 213, 0.05)';
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (!active) {
+                  e.currentTarget.style.backgroundColor = 'transparent';
+                }
+              }}
             >
               <span className="text-lg leading-none" aria-hidden="true">
                 {link.icon}
@@ -46,7 +62,8 @@ export function BottomNav() {
               </span>
               {active && (
                 <span 
-                  className="mt-0.5 h-1 w-8 rounded-full bg-[var(--color-accent)]" 
+                  className="mt-0.5 h-1 w-8 rounded-full"
+                  style={{ backgroundColor: '#FF6B6B' }}
                   aria-hidden="true"
                 />
               )}

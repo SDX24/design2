@@ -1,6 +1,8 @@
 "use client";
 
+import Link from "next/link";
 import { AppShell } from "@/components/AppShell";
+import { AccentButton } from "@/components/ui";
 import { useState } from "react";
 
 export default function ProfilePage() {
@@ -172,7 +174,13 @@ export default function ProfilePage() {
             </div>
           </div>
 
-          {/* Sign Out */}
+          {/* Auth Actions */}
+          <Link href="/auth/signin" className="block">
+            <AccentButton variant="primary" size="lg" className="w-full">
+              🔐 Sign in to save progress
+            </AccentButton>
+          </Link>
+          
           <button className="w-full rounded-[var(--radius-lg)] border-2 border-[var(--color-accent)] bg-white px-4 py-3 text-sm font-semibold text-[var(--color-accent)] transition-all hover:bg-[var(--color-accent)] hover:text-white">
             🚪 Sign out
           </button>

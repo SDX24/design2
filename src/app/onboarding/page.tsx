@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { AppShell } from "@/components/AppShell";
+import { Logo } from "@/components/Logo";
 import { useState } from "react";
 
 export default function OnboardingPage() {
@@ -24,13 +25,27 @@ export default function OnboardingPage() {
       <div className="space-y-6 py-4">
         {/* Hero Section */}
         <div className="space-y-3 text-center">
-          <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-accent)] text-4xl shadow-lg">
-            🎯
+          <div className="mx-auto flex items-center justify-center">
+            <Logo size={96} showText={false} />
           </div>
-          <h2 className="text-2xl font-bold text-[var(--color-text)]">
+          <h2 
+            className="font-bold"
+            style={{ 
+              fontSize: '40px',
+              color: '#222831',
+              fontFamily: 'JetBrains Mono, monospace'
+            }}
+          >
             Let's personalize your roadmap
           </h2>
-          <p className="text-base text-[var(--color-text-muted)]">
+          <p 
+            className="text-base"
+            style={{ 
+              color: '#393E46',
+              fontFamily: 'IBM Plex Sans, sans-serif',
+              fontSize: '16px'
+            }}
+          >
             Tell us about you so we can show the most relevant guides for your situation
           </p>
         </div>

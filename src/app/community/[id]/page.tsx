@@ -48,6 +48,21 @@ export default function PostPage({ params }: PostPageProps) {
 
   if (!post) return notFound();
 
+  const replies = post.replies || mockReplies;
+
+  const timeAgo = (timestamp: string) => {
+    const now = new Date();
+    const posted = new Date(timestamp);
+    const diffHours = Math.floor(
+      (now.getTime() - posted.getTime()) / (1000 * 60 * 60)
+    );
+    if (diffHours < 1) return "Just now";
+    if (diffHours < 24) return `${diffHours}h ago`;
+    const diffDays = Math.floor(diffHours / 24);
+    if (diffDays === 1) return "1 day ago";
+    return `${diffDays} days ago`;
+  };
+
   return (
     <AppShell 
       title="Community"
@@ -70,10 +85,10 @@ export default function PostPage({ params }: PostPageProps) {
             <div className="flex-1">
               <div className="flex items-center gap-2">
                 <span className="text-sm font-bold text-[var(--color-text)]">
-                  Anonymous User
+                  {post.author?.username || "Anonymous User"}
                 </span>
                 <span className="text-xs text-[var(--color-text-muted)]">
-                  2h ago
+                  {post.timestamp ? timeAgo(post.timestamp) : "2h ago"}
                 </span>
               </div>
               <span className="mt-1 inline-flex items-center gap-1.5 rounded-full bg-[var(--color-accent)]/10 px-3 py-1 text-xs font-semibold text-[var(--color-accent)]">
@@ -113,7 +128,7 @@ export default function PostPage({ params }: PostPageProps) {
         {/* Replies Section */}
         <section className="space-y-4">
           <h2 className="text-lg font-bold text-[var(--color-text)]">
-            💬 Replies ({mockReplies.length})
+            💬 Replies ({replies.length})
           </h2>
 
           {/* Reply Input */}
@@ -144,7 +159,7 @@ export default function PostPage({ params }: PostPageProps) {
 
           {/* Reply List */}
           <div className="space-y-3">
-            {mockReplies.map((reply, index) => (
+            {replies.map((reply, index) => (
               <div
                 key={reply.id}
                 className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-white p-4"
@@ -156,15 +171,15 @@ export default function PostPage({ params }: PostPageProps) {
               >
                 <div className="flex gap-3">
                   <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[var(--color-primary)]/20 to-[var(--color-accent)]/20 text-xl">
-                    {getEmojiForId(reply.author)}
+                    {reply.author?.avatar || getEmojiForId(reply.author?.username || reply.id)}
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center gap-2">
                       <span className="text-sm font-bold text-[var(--color-text)]">
-                        Anonymous User
+                        {reply.author?.username || "Anonymous User"}
                       </span>
                       <span className="text-xs text-[var(--color-text-muted)]">
-                        {reply.timestamp}
+                        {reply.timestamp ? timeAgo(reply.timestamp) : "1h ago"}
                       </span>
                     </div>
                     <p className="mt-2 text-sm text-[var(--color-text)]">
@@ -173,7 +188,7 @@ export default function PostPage({ params }: PostPageProps) {
                     <div className="mt-2 flex items-center gap-3 text-xs text-[var(--color-text-muted)]">
                       <button className="flex items-center gap-1 hover:text-[var(--color-primary)]">
                         <span>👍</span>
-                        {reply.helpful} helpful
+                        {reply.helpfulCount || reply.helpful || 0} helpful
                       </button>
                       <button className="hover:text-[var(--color-primary)]">
                         Reply

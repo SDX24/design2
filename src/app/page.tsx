@@ -90,6 +90,54 @@ export default function HomePage() {
           </div>
         </section>
 
+        {/* Learning Paths */}
+        <Link href="/learning-paths" className="block">
+          <Card variant="interactive" className="hover:border-[var(--color-primary)]">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--color-primary)]/10 text-lg">
+                  🎯
+                </div>
+                <div>
+                  <p className="label-uppercase text-[var(--color-text-muted)]">
+                    Learning Paths
+                  </p>
+                  <p className="mt-1 text-base font-medium text-[var(--color-text)]">
+                    Guided journeys to master adulting skills
+                  </p>
+                </div>
+              </div>
+              <span className="text-xl text-[var(--color-text-muted)] transition-transform group-hover:translate-x-1">
+                →
+              </span>
+            </div>
+          </Card>
+        </Link>
+
+        {/* Tools */}
+        <Link href="/tools" className="block">
+          <Card variant="interactive" className="hover:border-[var(--color-primary)]">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--color-primary)]/10 text-lg">
+                  🛠️
+                </div>
+                <div>
+                  <p className="label-uppercase text-[var(--color-text-muted)]">
+                    Tools
+                  </p>
+                  <p className="mt-1 text-base font-medium text-[var(--color-text)]">
+                    Budget planner, calculators & trackers
+                  </p>
+                </div>
+              </div>
+              <span className="text-xl text-[var(--color-text-muted)] transition-transform group-hover:translate-x-1">
+                →
+              </span>
+            </div>
+          </Card>
+        </Link>
+
         {/* Search Entry Point */}
         <Link href="/search" className="block">
           <Card variant="interactive" className="hover:border-[var(--color-primary)]">

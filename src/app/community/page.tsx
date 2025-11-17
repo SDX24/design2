@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { AppShell } from "@/components/AppShell";
 import { posts } from "@/data/posts";
+import { SectionHeader, Card, SubtleTag, AccentButton } from "@/components/ui";
 import { useState } from "react";
 
 const allTags = ["All posts", ...Array.from(new Set(posts.map((p) => p.tag)))];
@@ -39,12 +40,11 @@ export default function CommunityPage() {
               💬
             </div>
             <div>
-              <h1 className="text-2xl font-bold text-[var(--color-text)]">
-                Community
-              </h1>
-              <p className="text-sm text-[var(--color-text-muted)]">
-                Connect, learn, share
-              </p>
+              <SectionHeader 
+                title="Community" 
+                subtitle="Connect, learn, share"
+                className="mb-0"
+              />
             </div>
           </div>
           <p className="text-base leading-relaxed text-[var(--color-text-muted)]">
@@ -62,14 +62,13 @@ export default function CommunityPage() {
               <button
                 key={tag}
                 onClick={() => setSelectedTag(tag)}
-                className={`flex flex-shrink-0 items-center gap-1.5 rounded-full px-4 py-2 text-sm font-medium transition-all ${
-                  selectedTag === tag
-                    ? "bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-accent)] text-white shadow-md"
-                    : "bg-[var(--color-bg)] text-[var(--color-text-muted)] hover:bg-[var(--color-primary)]/10"
-                }`}
               >
-                {tag !== "All posts" && tagEmojis[tag]}
-                {tag}
+                <SubtleTag 
+                  variant={selectedTag === tag ? "accent" : "neutral"}
+                  className={selectedTag === tag ? "bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-accent)] text-white shadow-md" : ""}
+                >
+                  {tag !== "All posts" && tagEmojis[tag]} {tag}
+                </SubtleTag>
               </button>
             ))}
           </div>
@@ -84,62 +83,77 @@ export default function CommunityPage() {
 
         {/* Posts List */}
         <div className="space-y-3">
-          {filteredPosts.map((post, index) => (
-            <Link
-              key={post.id}
-              href={`/community/${post.id}`}
-              className="group block rounded-[var(--radius-lg)] border-2 border-[var(--color-border)] bg-white p-4 shadow-sm transition-all hover:border-[var(--color-primary)] hover:shadow-md"
-              style={{
-                animation: "slideUp 0.5s ease-out",
-                animationDelay: `${index * 0.1}s`,
-                animationFillMode: "backwards",
-              }}
-            >
-              {/* Post Header */}
-              <div className="flex items-start gap-3">
-                <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[var(--color-primary)]/20 to-[var(--color-accent)]/20 text-xl">
-                  {getEmojiForId(post.id)}
-                </div>
-                <div className="flex-1">
-                  <div className="flex items-start justify-between gap-2">
-                    <span className="flex items-center gap-1.5 rounded-full bg-[var(--color-accent)]/10 px-3 py-1 text-xs font-semibold text-[var(--color-accent)]">
-                      {tagEmojis[post.tag]}
-                      {post.tag}
-                    </span>
-                    <span className="text-xs text-[var(--color-text-muted)]">
-                      2h ago
-                    </span>
+          {filteredPosts.map((post) => {
+            const timeAgo = (timestamp: string) => {
+              const now = new Date();
+              const posted = new Date(timestamp);
+              const diffHours = Math.floor(
+                (now.getTime() - posted.getTime()) / (1000 * 60 * 60)
+              );
+              if (diffHours < 1) return "Just now";
+              if (diffHours < 24) return `${diffHours}h ago`;
+              const diffDays = Math.floor(diffHours / 24);
+              if (diffDays === 1) return "1 day ago";
+              return `${diffDays} days ago`;
+            };
+
+            return (
+              <Link key={post.id} href={`/community/${post.id}`} className="block">
+                <Card variant="interactive" className="hover:border-[var(--color-primary)]">
+                  {/* Post Header */}
+                  <div className="flex items-start gap-3">
+                    <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[var(--color-primary)]/20 to-[var(--color-accent)]/20 text-xl">
+                      {post.author?.avatar || getEmojiForId(post.id)}
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-start justify-between gap-2">
+                        <div className="flex items-center gap-2">
+                          <SubtleTag variant="accent">
+                            {tagEmojis[post.tag]} {post.tag}
+                          </SubtleTag>
+                          {post.author && (
+                            <span className="text-xs text-[var(--color-text-muted)]">
+                              by {post.author.username}
+                            </span>
+                          )}
+                        </div>
+                        <span className="text-xs text-[var(--color-text-muted)]">
+                          {post.timestamp ? timeAgo(post.timestamp) : "2h ago"}
+                        </span>
+                      </div>
+                      <h2 className="mt-2 text-base font-bold text-[var(--color-text)]">
+                        {post.title}
+                      </h2>
+                      <p className="mt-1 text-sm text-[var(--color-text-muted)]">
+                        {post.excerpt}
+                      </p>
+                      {/* Engagement */}
+                      <div className="mt-3 flex items-center gap-4 text-xs text-[var(--color-text-muted)]">
+                        <span className="flex items-center gap-1">
+                          <span className="text-base">💬</span>
+                          {post.replyCount || 0} replies
+                        </span>
+                        <span className="flex items-center gap-1">
+                          <span className="text-base">👍</span>
+                          {post.helpfulCount || 0} helpful
+                        </span>
+                      </div>
+                    </div>
                   </div>
-                  <h2 className="mt-2 text-base font-bold text-[var(--color-text)]">
-                    {post.title}
-                  </h2>
-                  <p className="mt-1 text-sm text-[var(--color-text-muted)]">
-                    {post.excerpt}
-                  </p>
-                  {/* Engagement */}
-                  <div className="mt-3 flex items-center gap-4 text-xs text-[var(--color-text-muted)]">
-                    <span className="flex items-center gap-1">
-                      <span className="text-base">💬</span>
-                      {Math.floor(Math.random() * 20) + 1} replies
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <span className="text-base">👍</span>
-                      {Math.floor(Math.random() * 50) + 5} helpful
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </Link>
-          ))}
+                </Card>
+              </Link>
+            );
+          })}
         </div>
 
         {/* FAB - New Post Button */}
-        <button
-          className="fixed bottom-24 right-6 z-10 flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-accent)] text-2xl text-white shadow-lg transition-all hover:scale-110 hover:shadow-xl active:scale-95"
+        <AccentButton
+          variant="primary"
+          className="fixed bottom-24 right-6 z-10 h-14 w-14 !p-0 text-2xl shadow-lg hover:scale-110 hover:shadow-xl active:scale-95"
           aria-label="Create new post"
         >
           ✍️
-        </button>
+        </AccentButton>
       </section>
     </AppShell>
   );

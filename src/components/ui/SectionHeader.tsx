@@ -20,9 +20,27 @@ export function SectionHeader({
       {...props}
     >
       <div>
-        <h2 className="text-2xl font-bold text-[var(--color-text)]">{title}</h2>
+        <h2 
+          className="font-bold"
+          style={{ 
+            fontSize: '28px',
+            color: '#222831',
+            fontFamily: 'JetBrains Mono, monospace'
+          }}
+        >
+          {title}
+        </h2>
         {subtitle && (
-          <p className="mt-1 text-sm text-[var(--color-text-muted)]">{subtitle}</p>
+          <p 
+            className="mt-1 text-sm"
+            style={{ 
+              color: '#393E46',
+              fontFamily: 'IBM Plex Sans, sans-serif',
+              fontSize: '16px'
+            }}
+          >
+            {subtitle}
+          </p>
         )}
       </div>
       {action && <div>{action}</div>}
