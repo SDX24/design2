@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { AppShell } from "@/components/AppShell";
 import { Card, InputField } from "@/components/ui";
 
 export default function RentCalculatorPage() {
@@ -13,16 +14,20 @@ export default function RentCalculatorPage() {
   const isAffordable = rentPercentage <= 30;
 
   return (
-    <div className="min-h-screen bg-neutral-50 pb-24">
-      <div className="p-6 space-y-6">
+    <AppShell 
+      title="Rent Calculator"
+      headerAction={
+        <Link href="/tools" className="text-sm font-medium" style={{ color: '#3A7BD5' }}>
+          ← Tools
+        </Link>
+      }
+    >
+      <section className="space-y-6">
         <div>
-          <Link href="/tools" className="text-sm text-accent-600 mb-2 inline-block">
-            ← Back to Tools
-          </Link>
-          <h1 className="text-2xl font-bold text-neutral-900 mb-1">
+          <h1 className="text-2xl font-bold mb-1" style={{ color: '#222831', fontFamily: 'JetBrains Mono, monospace' }}>
             Rent Affordability Calculator
           </h1>
-          <p className="text-neutral-600">
+          <p style={{ color: '#393E46', fontFamily: 'IBM Plex Sans, sans-serif' }}>
             Calculate how much rent you can afford using the 30% rule
           </p>
         </div>
@@ -166,7 +171,7 @@ export default function RentCalculatorPage() {
             </Card>
           </>
         )}
-      </div>
-    </div>
+      </section>
+    </AppShell>
   );
 }

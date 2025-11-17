@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { AppShell } from "@/components/AppShell";
 import { learningPaths } from "@/data/learningPaths";
 import { Card, SectionHeader } from "@/components/ui";
 import { useEffect, useState } from "react";
@@ -22,8 +23,8 @@ export default function LearningPathsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-neutral-50 pb-24">
-      <div className="p-6 space-y-6">
+    <AppShell title="Learning Paths">
+      <section className="space-y-6 py-4">
         <SectionHeader
           title="Learning Paths"
           subtitle="Guided journeys to master key adulting skills"
@@ -92,7 +93,7 @@ export default function LearningPathsPage() {
             );
           })}
         </div>
-      </div>
-    </div>
+      </section>
+    </AppShell>
   );
 }

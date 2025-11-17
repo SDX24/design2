@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { AppShell } from "@/components/AppShell";
 import { Card, InputField, AccentButton } from "@/components/ui";
 
 interface Subscription {
@@ -66,16 +67,20 @@ export default function SubscriptionsPage() {
   const yearlyTotal = monthlyTotal * 12;
 
   return (
-    <div className="min-h-screen bg-neutral-50 pb-24">
-      <div className="p-6 space-y-6">
+    <AppShell 
+      title="Subscriptions Tracker"
+      headerAction={
+        <Link href="/tools" className="text-sm font-medium" style={{ color: '#3A7BD5' }}>
+          ← Tools
+        </Link>
+      }
+    >
+      <section className="space-y-6">
         <div>
-          <Link href="/tools" className="text-sm text-accent-600 mb-2 inline-block">
-            ← Back to Tools
-          </Link>
-          <h1 className="text-2xl font-bold text-neutral-900 mb-1">
+          <h1 className="text-2xl font-bold mb-1" style={{ color: '#222831', fontFamily: 'JetBrains Mono, monospace' }}>
             Subscriptions Tracker
           </h1>
-          <p className="text-neutral-600">
+          <p style={{ color: '#393E46', fontFamily: 'IBM Plex Sans, sans-serif' }}>
             Keep track of all your recurring costs
           </p>
         </div>
@@ -220,7 +225,7 @@ export default function SubscriptionsPage() {
             </Card>
           )
         )}
-      </div>
-    </div>
+      </section>
+    </AppShell>
   );
 }

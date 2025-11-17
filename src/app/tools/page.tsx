@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { AppShell } from "@/components/AppShell";
 import { Card, SectionHeader } from "@/components/ui";
 
 const tools = [
@@ -41,8 +42,8 @@ const tools = [
 
 export default function ToolsPage() {
   return (
-    <div className="min-h-screen bg-neutral-50 pb-24">
-      <div className="p-6 space-y-6">
+    <AppShell title="Tools">
+      <section className="space-y-6 py-4">
         <SectionHeader
           title="Tools"
           subtitle="Practical calculators and trackers to help you adult"
@@ -80,7 +81,7 @@ export default function ToolsPage() {
             </Link>
           ))}
         </div>
-      </div>
-    </div>
+      </section>
+    </AppShell>
   );
 }

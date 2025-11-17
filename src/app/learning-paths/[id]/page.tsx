@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { AppShell } from "@/components/AppShell";
 import { learningPaths } from "@/data/learningPaths";
 import { guides } from "@/data/guides";
 import { GuideCard, Card, AccentButton } from "@/components/ui";
@@ -77,23 +78,24 @@ export default function LearningPathDetailPage({
   };
 
   return (
-    <div className="min-h-screen bg-neutral-50 pb-24">
-      <div className="p-6 space-y-6">
+    <AppShell 
+      title={path.title}
+      headerAction={
+        <Link href="/learning-paths" className="text-sm font-medium" style={{ color: '#3A7BD5' }}>
+          ← Learning Paths
+        </Link>
+      }
+    >
+      <section className="space-y-6">
         {/* Header */}
         <div>
-          <Link
-            href="/learning-paths"
-            className="text-sm text-accent-600 mb-2 inline-block"
-          >
-            ← Back to Learning Paths
-          </Link>
           <div className="flex items-start gap-3 mb-2">
             <div className="text-5xl">{path.emoji}</div>
             <div className="flex-1">
-              <h1 className="text-2xl font-bold text-neutral-900 mb-1">
+              <h1 className="text-2xl font-bold mb-1" style={{ color: '#222831', fontFamily: 'JetBrains Mono, monospace' }}>
                 {path.title}
               </h1>
-              <p className="text-neutral-600 mb-3">{path.description}</p>
+              <p className="mb-3" style={{ color: '#393E46', fontFamily: 'IBM Plex Sans, sans-serif' }}>{path.description}</p>
               <div className="flex items-center gap-2 flex-wrap">
                 <span className="text-xs px-2 py-1 bg-neutral-100 text-neutral-700 rounded-full">
                   {path.difficulty}
@@ -250,7 +252,7 @@ export default function LearningPathDetailPage({
             </div>
           </Card>
         )}
-      </div>
-    </div>
+      </section>
+    </AppShell>
   );
 }

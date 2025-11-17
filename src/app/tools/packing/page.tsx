@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { AppShell } from "@/components/AppShell";
 import { Card } from "@/components/ui";
 
 interface PackingList {
@@ -119,16 +120,20 @@ export default function PackingPage() {
   };
 
   return (
-    <div className="min-h-screen bg-neutral-50 pb-24">
-      <div className="p-6 space-y-6">
+    <AppShell 
+      title="Packing Lists"
+      headerAction={
+        <Link href="/tools" className="text-sm font-medium" style={{ color: '#3A7BD5' }}>
+          ← Tools
+        </Link>
+      }
+    >
+      <section className="space-y-6">
         <div>
-          <Link href="/tools" className="text-sm text-accent-600 mb-2 inline-block">
-            ← Back to Tools
-          </Link>
-          <h1 className="text-2xl font-bold text-neutral-900 mb-1">
+          <h1 className="text-2xl font-bold mb-1" style={{ color: '#222831', fontFamily: 'JetBrains Mono, monospace' }}>
             Packing Lists
           </h1>
-          <p className="text-neutral-600">Never forget essentials again</p>
+          <p style={{ color: '#393E46', fontFamily: 'IBM Plex Sans, sans-serif' }}>Never forget essentials again</p>
         </div>
 
         {/* List Selector */}
@@ -205,7 +210,7 @@ export default function PackingPage() {
               </Card>
             </div>
           ))}
-      </div>
-    </div>
+      </section>
+    </AppShell>
   );
 }

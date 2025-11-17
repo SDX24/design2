@@ -2,109 +2,191 @@
 
 import Link from "next/link";
 import { AppShell } from "@/components/AppShell";
-import { AccentButton } from "@/components/ui";
-import { useState } from "react";
+import { Card, AccentButton } from "@/components/ui";
+import { useState, useEffect } from "react";
+import { guides } from "@/data/guides";
 
 export default function ProfilePage() {
   const [region, setRegion] = useState("Ontario");
   const [notifications, setNotifications] = useState(true);
   const [language, setLanguage] = useState("English");
+  const [savedGuides, setSavedGuides] = useState<string[]>([]);
+  const [guidesCompleted, setGuidesCompleted] = useState(0);
 
-  const stats = [
-    { label: "Guides completed", value: 8, emoji: "✅" },
-    { label: "Community posts", value: 3, emoji: "💬" },
-    { label: "Days streak", value: 12, emoji: "🔥" },
-  ];
+  useEffect(() => {
+    // Load saved guides from localStorage
+    const saved = localStorage.getItem("savedGuides");
+    if (saved) {
+      setSavedGuides(JSON.parse(saved));
+    }
 
-  const savedGuides = [
-    { title: "Budgeting 101", category: "Money", emoji: "💰" },
-    { title: "Renting Checklist", category: "Housing", emoji: "🏠" },
-  ];
+    // Count completed guides
+    let completed = 0;
+    guides.forEach((guide) => {
+      const progress = localStorage.getItem(`guide-${guide.slug}`);
+      if (progress) {
+        const completedSteps = JSON.parse(progress);
+        if (completedSteps.length === guide.steps.length) {
+          completed++;
+        }
+      }
+    });
+    setGuidesCompleted(completed);
+  }, []);
 
   return (
     <AppShell title="Profile">
-      <section className="space-y-6 py-4">
+      <section className="space-y-6">
         {/* Profile Header */}
-        <div className="rounded-[var(--radius-lg)] border-2 border-[var(--color-border)] bg-gradient-to-br from-[var(--color-primary)]/5 to-[var(--color-accent)]/5 p-6 shadow-sm">
-          <div className="flex items-center gap-4">
-            <div className="flex h-20 w-20 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-accent)] text-4xl shadow-lg">
+        <Card>
+          <div className="flex items-center gap-4 mb-4">
+            <div className="w-20 h-20 rounded-full bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center text-3xl text-white font-bold">
               👤
             </div>
             <div>
-              <h1 className="text-2xl font-bold text-[var(--color-text)]">
+              <h2
+                className="text-2xl font-bold"
+                style={{
+                  color: "#222831",
+                  fontFamily: "JetBrains Mono, monospace",
+                }}
+              >
                 Adult Learner
-              </h1>
-              <p className="mt-1 text-sm text-[var(--color-text-muted)]">
+              </h2>
+              <p style={{ color: "#393E46", fontFamily: "IBM Plex Sans, sans-serif" }}>
                 📍 {region} • Learning since Jan 2024
               </p>
             </div>
           </div>
+          <div className="grid grid-cols-2 gap-4 pt-4 border-t border-neutral-200">
+            <div>
+              <p className="text-2xl font-bold" style={{ color: "#3A7BD5" }}>
+                {guidesCompleted}
+              </p>
+              <p className="text-sm" style={{ color: "#393E46" }}>
+                Guides Completed
+              </p>
+            </div>
+            <div>
+              <p className="text-2xl font-bold" style={{ color: "#FF6B6B" }}>
+                {savedGuides.length}
+              </p>
+              <p className="text-sm" style={{ color: "#393E46" }}>
+                Saved Guides
+              </p>
+            </div>
+          </div>
+        </Card>
 
-          {/* Stats */}
-          <div className="mt-6 grid grid-cols-3 gap-3">
-            {stats.map((stat, index) => (
-              <div
-                key={stat.label}
-                className="rounded-xl bg-white p-3 text-center shadow-sm"
-                style={{
-                  animation: "slideUp 0.5s ease-out",
-                  animationDelay: `${index * 0.1}s`,
-                  animationFillMode: "backwards",
-                }}
-              >
-                <div className="text-2xl">{stat.emoji}</div>
-                <p className="mt-1 text-lg font-bold text-[var(--color-primary)]">
-                  {stat.value}
+        {/* Achievements */}
+        <div>
+          <h3
+            className="text-2xl font-bold mb-4"
+            style={{
+              color: "#222831",
+              fontFamily: "JetBrains Mono, monospace",
+            }}
+          >
+            🏆 Achievements
+          </h3>
+          <div className="grid grid-cols-3 gap-3">
+            {guidesCompleted >= 1 && (
+              <Card className="text-center p-4">
+                <div className="text-3xl mb-2">🌱</div>
+                <p className="text-xs font-bold" style={{ color: "#222831" }}>
+                  First Steps
                 </p>
-                <p className="caption mt-0.5 text-[var(--color-text-muted)]">
-                  {stat.label}
+              </Card>
+            )}
+            {guidesCompleted >= 5 && (
+              <Card className="text-center p-4">
+                <div className="text-3xl mb-2">🚀</div>
+                <p className="text-xs font-bold" style={{ color: "#222831" }}>
+                  Quick Learner
                 </p>
-              </div>
-            ))}
+              </Card>
+            )}
+            {guidesCompleted >= 10 && (
+              <Card className="text-center p-4">
+                <div className="text-3xl mb-2">⭐</div>
+                <p className="text-xs font-bold" style={{ color: "#222831" }}>
+                  Adult Master
+                </p>
+              </Card>
+            )}
+            {savedGuides.length >= 5 && (
+              <Card className="text-center p-4">
+                <div className="text-3xl mb-2">�</div>
+                <p className="text-xs font-bold" style={{ color: "#222831" }}>
+                  Bookworm
+                </p>
+              </Card>
+            )}
+            {guidesCompleted === 0 && savedGuides.length === 0 && (
+              <Card className="text-center p-4 col-span-3">
+                <div className="text-3xl mb-2">🎯</div>
+                <p className="text-xs" style={{ color: "#393E46" }}>
+                  Complete guides to unlock achievements
+                </p>
+              </Card>
+            )}
           </div>
         </div>
 
         {/* Saved Guides */}
-        <div className="space-y-3">
-          <h2 className="text-lg font-bold text-[var(--color-text)]">
-            📚 Saved Guides
-          </h2>
-          {savedGuides.length === 0 ? (
-            <div className="rounded-[var(--radius-lg)] border-2 border-dashed border-[var(--color-border)] bg-[var(--color-bg)] px-6 py-8 text-center">
-              <div className="text-4xl mb-2">🔖</div>
-              <p className="text-sm text-[var(--color-text-muted)]">
-                No saved guides yet
-              </p>
+        <div>
+          <h3
+            className="text-2xl font-bold mb-4"
+            style={{
+              color: "#222831",
+              fontFamily: "JetBrains Mono, monospace",
+            }}
+          >
+            💾 Saved Guides
+          </h3>
+          {savedGuides.length > 0 ? (
+            <div className="space-y-3">
+              {savedGuides.slice(0, 5).map((slug) => {
+                const guide = guides.find((g) => g.slug === slug);
+                return guide ? (
+                  <Link key={slug} href={`/guides/${slug}`}>
+                    <Card className="hover:shadow-lg transition-shadow cursor-pointer">
+                      <div className="flex items-center gap-3">
+                        <div style={{ color: "#FF6B6B", fontSize: "24px" }}>
+                          ❤️
+                        </div>
+                        <div className="flex-1">
+                          <h4
+                            className="font-bold"
+                            style={{
+                              color: "#222831",
+                              fontFamily: "JetBrains Mono, monospace",
+                            }}
+                          >
+                            {guide.title}
+                          </h4>
+                          <p
+                            className="text-sm"
+                            style={{ color: "#393E46" }}
+                          >
+                            {guide.category}
+                          </p>
+                        </div>
+                      </div>
+                    </Card>
+                  </Link>
+                ) : null;
+              })}
             </div>
           ) : (
-            <div className="space-y-2">
-              {savedGuides.map((guide, index) => (
-                <div
-                  key={guide.title}
-                  className="flex items-center gap-3 rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-white p-3 shadow-sm transition-all hover:border-[var(--color-primary)] hover:shadow-md"
-                  style={{
-                    animation: "slideUp 0.5s ease-out",
-                    animationDelay: `${index * 0.1}s`,
-                    animationFillMode: "backwards",
-                  }}
-                >
-                  <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[var(--color-primary)]/10 to-[var(--color-accent)]/10 text-xl">
-                    {guide.emoji}
-                  </div>
-                  <div className="flex-1">
-                    <p className="text-sm font-bold text-[var(--color-text)]">
-                      {guide.title}
-                    </p>
-                    <p className="caption text-[var(--color-text-muted)]">
-                      {guide.category}
-                    </p>
-                  </div>
-                  <button className="text-xl transition-transform hover:scale-110">
-                    🗑️
-                  </button>
-                </div>
-              ))}
-            </div>
+            <Card>
+              <p
+                className="text-center py-4"
+                style={{ color: "#393E46" }}
+              >
+                No saved guides yet. Save guides to access them quickly!
+              </p>
+            </Card>
           )}
         </div>
 

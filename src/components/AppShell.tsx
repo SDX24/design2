@@ -31,7 +31,27 @@ export function AppShell({
             <Link href="/" className="flex items-center">
               <Logo size={32} showText={true} />
             </Link>
-            {headerAction}
+            
+            {headerAction ? (
+              headerAction
+            ) : (
+              <div className="flex items-center gap-3">
+                <Link 
+                  href="/search"
+                  className="flex h-9 w-9 items-center justify-center rounded-lg transition-all hover:bg-[#3A7BD5]/10"
+                  aria-label="Search"
+                >
+                  <span className="text-xl">🔍</span>
+                </Link>
+                <Link 
+                  href="/tools"
+                  className="flex h-9 w-9 items-center justify-center rounded-lg transition-all hover:bg-[#3A7BD5]/10"
+                  aria-label="Tools"
+                >
+                  <span className="text-xl">🛠️</span>
+                </Link>
+              </div>
+            )}
           </div>
         </header>
       )}
