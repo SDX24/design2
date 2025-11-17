@@ -1,19 +1,6 @@
 import Link from "next/link";
 import { AppShell } from "@/components/AppShell";
-
-function GuideLink({ href, title }: { href: string; title: string }) {
-  return (
-    <Link
-      href={href}
-      className="group flex items-center justify-between rounded-xl border border-[var(--color-border)] bg-white px-4 py-3 text-base shadow-sm transition-all hover:border-[var(--color-primary)] hover:shadow-md"
-    >
-      <span className="font-medium text-[var(--color-text)]">{title}</span>
-      <span className="text-sm text-[var(--color-text-muted)] transition-transform group-hover:translate-x-1">
-        →
-      </span>
-    </Link>
-  );
-}
+import { SectionHeader, GuideCard, Card } from "@/components/ui";
 
 export default function HomePage() {
   return (
@@ -51,67 +38,80 @@ export default function HomePage() {
         </Link>
 
         {/* Local Guides – Clear label per Assignment 08 */}
-        <Link
-          href="/local-guides"
-          className="group block rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-bg-light)] px-6 py-5 shadow-sm transition-all hover:border-[var(--color-primary)] hover:shadow-md"
-        >
-          <div className="flex items-start justify-between">
-            <div className="flex-1">
-              <p className="label-uppercase text-[var(--color-text-muted)]">
-                📍 Local Guides
-              </p>
-              <h3 className="mt-2 text-lg font-semibold text-[var(--color-text)]">
-                See guides for your region
-              </h3>
-              <p className="mt-1 text-sm text-[var(--color-text-muted)]">
-                Taxes, ID, renting and more tailored to where you live.
-              </p>
+        <Link href="/local-guides" className="block">
+          <Card variant="interactive" className="hover:border-[var(--color-primary)]">
+            <div className="flex items-start justify-between">
+              <div className="flex-1">
+                <p className="label-uppercase text-[var(--color-text-muted)]">
+                  📍 Local Guides
+                </p>
+                <h3 className="mt-2 text-lg font-semibold text-[var(--color-text)]">
+                  See guides for your region
+                </h3>
+                <p className="mt-1 text-sm text-[var(--color-text-muted)]">
+                  Taxes, ID, renting and more tailored to where you live.
+                </p>
+              </div>
+              <span className="ml-3 text-xl transition-transform group-hover:translate-x-1">
+                →
+              </span>
             </div>
-            <span className="ml-3 text-xl transition-transform group-hover:translate-x-1">
-              →
-            </span>
-          </div>
+          </Card>
         </Link>
 
         {/* Popular Guides */}
-        <section className="space-y-3">
-          <h3 className="text-lg font-semibold text-[var(--color-text)]">
-            Popular guides
-          </h3>
-          <div className="space-y-2">
-            <GuideLink href="/guides/budgeting-101" title="Budgeting 101" />
-            <GuideLink
-              href="/guides/renting-checklist"
-              title="First rental checklist"
+        <section className="space-y-4">
+          <SectionHeader title="Popular guides" />
+          <div className="space-y-3">
+            <GuideCard
+              title="Budgeting 101"
+              summary="Learn how to track expenses and save money effectively"
+              category="Finance"
+              emoji="💰"
+              href="/guides/budgeting-101"
+              stepCount={5}
             />
-            <GuideLink
-              href="/guides/taxes-canada-basics"
+            <GuideCard
+              title="First rental checklist"
+              summary="Everything you need to know before signing a lease"
+              category="Housing"
+              emoji="🏠"
+              href="/guides/renting-checklist"
+              stepCount={8}
+            />
+            <GuideCard
               title="Taxes in Canada: basic steps"
+              summary="File your first tax return with confidence"
+              category="Finance"
+              emoji="📋"
+              href="/guides/taxes-canada-basics"
+              stepCount={6}
             />
           </div>
         </section>
 
         {/* Search Entry Point */}
-        <Link
-          href="/search"
-          className="group flex items-center justify-between rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-white px-5 py-4 shadow-sm transition-all hover:border-[var(--color-primary)] hover:shadow-md"
-        >
-          <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--color-primary)]/10 text-lg">
-              🔍
+        <Link href="/search" className="block">
+          <Card variant="interactive" className="hover:border-[var(--color-primary)]">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--color-primary)]/10 text-lg">
+                  🔍
+                </div>
+                <div>
+                  <p className="label-uppercase text-[var(--color-text-muted)]">
+                    Search
+                  </p>
+                  <p className="mt-1 text-base font-medium text-[var(--color-text)]">
+                    Search all guides and community posts
+                  </p>
+                </div>
+              </div>
+              <span className="text-xl text-[var(--color-text-muted)] transition-transform group-hover:translate-x-1">
+                →
+              </span>
             </div>
-            <div>
-              <p className="label-uppercase text-[var(--color-text-muted)]">
-                Search
-              </p>
-              <p className="mt-1 text-base font-medium text-[var(--color-text)]">
-                Search all guides and community posts
-              </p>
-            </div>
-          </div>
-          <span className="text-xl text-[var(--color-text-muted)] transition-transform group-hover:translate-x-1">
-            →
-          </span>
+          </Card>
         </Link>
 
         {/* History Link */}
