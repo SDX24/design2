@@ -78,13 +78,52 @@ export default function ProfilePage() {
           </div>
         </Card>
 
+        {/* History & Recent Activity - HIGH PRIORITY */}
+        <Link href="/history">
+          <Card 
+            className="cursor-pointer transition-all hover:shadow-lg"
+            style={{ borderLeft: "4px solid #FF6B6B" }}
+          >
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <div 
+                  className="flex h-14 w-14 items-center justify-center rounded-xl text-3xl"
+                  style={{ 
+                    background: "linear-gradient(135deg, rgba(58, 123, 213, 0.1), rgba(255, 107, 107, 0.1))"
+                  }}
+                >
+                  📚
+                </div>
+                <div>
+                  <h3
+                    className="text-lg font-bold"
+                    style={{
+                      color: "#222831",
+                      fontFamily: "IBM Plex Sans, sans-serif",
+                    }}
+                  >
+                    View your history
+                  </h3>
+                  <p
+                    className="text-sm mt-1"
+                    style={{ color: "#393E46", fontFamily: "IBM Plex Sans, sans-serif" }}
+                  >
+                    Continue where you left off
+                  </p>
+                </div>
+              </div>
+              <div style={{ color: "#3A7BD5", fontSize: "24px" }}>→</div>
+            </div>
+          </Card>
+        </Link>
+
         {/* Achievements */}
         <div>
           <h3
-            className="text-2xl font-bold mb-4"
+            className="text-xl font-bold mb-4"
             style={{
               color: "#222831",
-              fontFamily: "JetBrains Mono, monospace",
+              fontFamily: "IBM Plex Sans, sans-serif",
             }}
           >
             🏆 Achievements
@@ -93,7 +132,7 @@ export default function ProfilePage() {
             {guidesCompleted >= 1 && (
               <Card className="text-center p-4">
                 <div className="text-3xl mb-2">🌱</div>
-                <p className="text-xs font-bold" style={{ color: "#222831" }}>
+                <p className="text-xs font-bold" style={{ color: "#222831", fontFamily: "IBM Plex Sans, sans-serif" }}>
                   First Steps
                 </p>
               </Card>
@@ -101,7 +140,7 @@ export default function ProfilePage() {
             {guidesCompleted >= 5 && (
               <Card className="text-center p-4">
                 <div className="text-3xl mb-2">🚀</div>
-                <p className="text-xs font-bold" style={{ color: "#222831" }}>
+                <p className="text-xs font-bold" style={{ color: "#222831", fontFamily: "IBM Plex Sans, sans-serif" }}>
                   Quick Learner
                 </p>
               </Card>
@@ -109,15 +148,15 @@ export default function ProfilePage() {
             {guidesCompleted >= 10 && (
               <Card className="text-center p-4">
                 <div className="text-3xl mb-2">⭐</div>
-                <p className="text-xs font-bold" style={{ color: "#222831" }}>
+                <p className="text-xs font-bold" style={{ color: "#222831", fontFamily: "IBM Plex Sans, sans-serif" }}>
                   Adult Master
                 </p>
               </Card>
             )}
             {savedGuides.length >= 5 && (
               <Card className="text-center p-4">
-                <div className="text-3xl mb-2">�</div>
-                <p className="text-xs font-bold" style={{ color: "#222831" }}>
+                <div className="text-3xl mb-2">📚</div>
+                <p className="text-xs font-bold" style={{ color: "#222831", fontFamily: "IBM Plex Sans, sans-serif" }}>
                   Bookworm
                 </p>
               </Card>
@@ -125,7 +164,7 @@ export default function ProfilePage() {
             {guidesCompleted === 0 && savedGuides.length === 0 && (
               <Card className="text-center p-4 col-span-3">
                 <div className="text-3xl mb-2">🎯</div>
-                <p className="text-xs" style={{ color: "#393E46" }}>
+                <p className="text-xs" style={{ color: "#393E46", fontFamily: "IBM Plex Sans, sans-serif" }}>
                   Complete guides to unlock achievements
                 </p>
               </Card>

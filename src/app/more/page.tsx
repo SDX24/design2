@@ -37,9 +37,9 @@ export default function MorePage() {
     {
       emoji: "📚",
       title: "History",
-      description: "Your recently viewed guides",
+      description: "Continue where you left off",
       href: "/history",
-      color: "#393E46",
+      color: "#FF6B6B",
     },
   ];
 

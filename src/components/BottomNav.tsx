@@ -8,7 +8,7 @@ const links = [
   { href: "/", label: "Home", icon: "🏠" },
   { href: "/guides", label: "Guides", icon: "📚" },
   { href: "/more", label: "More", icon: "✨" },
-  { href: "/community", label: "Community", icon: "👥" },
+  { href: "/community", label: "Posts", icon: "👥" },
   { href: "/profile", label: "Profile", icon: "👤" },
 ];
 
@@ -54,10 +54,16 @@ export function BottomNav() {
               <span className="text-lg leading-none" aria-hidden="true">
                 {link.icon}
               </span>
-              <span className={cn(
-                "text-[11px] font-medium leading-none",
-                active && "font-semibold"
-              )}>
+              <span 
+                className={cn(
+                  "font-medium leading-none",
+                  active && "font-semibold"
+                )}
+                style={{ 
+                  fontSize: "12px",
+                  fontFamily: "IBM Plex Sans, sans-serif"
+                }}
+              >
                 {link.label}
               </span>
               {active && (
